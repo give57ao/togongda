@@ -1,0 +1,459 @@
+@charset "utf-8";
+
+/* Common */
+html, body {
+    width: 100%;
+    height: 100%;
+    font-family: '맑은 고딕', '돋움', 'Malgun Gothic', 'Dotum', Arial, Roboto, sans-serif;
+    font-size: 14px;
+    line-height: 150%;
+    color: #111;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    line-height: 150%;
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 4em;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 1.4em;
+}
+
+h3 {
+    font-size: 1.2em;
+    font-weight: bold;
+    display: inline-block;
+}
+
+h4 {
+    font-weight: bold;
+}
+
+hr {
+    border: 0.5px solid #CCC;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #111;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+input:focus,
+textarea:focus {
+    outline-color: #5573E8;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #CCC;
+}
+
+textarea {
+	width: 100%;
+	height: 200px;
+	padding: 10px;
+	border: 2px solid #111;
+    border-radius: 10px;
+    box-sizing: border-box;
+	resize: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+.select {
+    font-weight: bold;
+    color: #111;
+}
+
+.side_menu li {
+    float: left;
+    margin-left: 10px;
+    transition: all 0.2s;
+}
+
+.side_menu li:first-child {
+    margin-left: 0;
+}
+
+.side_menu li::after {
+    content: "|";
+    margin-left: 10px;
+}
+
+.side_menu li:last-child::after {
+    content: "";
+    margin-left: 0;
+}
+
+.side_menu li:hover {
+    text-decoration: underline;
+}
+
+.overtext {
+	width: 500px;
+	text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.tap_overtext {
+	width: 200px;
+	text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.btn_com {
+    background: #111;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 10px;
+    color: #FFF;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn_com:hover {
+    background: #5573E8;
+}
+
+.btn_main {
+    width: 100%;
+    padding: 20px 0;
+    font-size: 1.4em;
+    display: inline-block;
+}
+
+/* Header */
+#header {
+	position: fixed;
+	top: 0;
+    width: 100%;
+    height: 80px;
+    min-width: 1400px;
+    background: #FFF;
+    padding: 0 80px;
+    border-bottom: 1px solid #CCC;
+    line-height: 80px;
+    box-sizing: border-box;
+    box-shadow: 0 0 4px #CCC;
+    z-index: 100;
+}
+
+#header_logo {
+    float: left;
+    margin-right: 40px;
+    font-size: 2em;
+    font-weight: bold;
+    color: #5573E8;
+}
+
+#header_nav {
+    float: left;
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+#header_nav ul li {
+    float: left;
+    margin-right: 40px;
+    transition: all 0.2s;
+}
+
+#header_nav ul li a {
+	color: #CCC;
+}
+
+#header_nav ul li a:hover {
+    color: #111;
+}
+
+#header_nav ul li a.active {
+	color: #111;
+}
+
+#header_menu {
+    float: right;
+}
+
+#header_menu ul li {
+    float: left;
+    margin-left: 30px;
+    transition: all 0.2s;
+}
+
+#header_menu ul li img {
+	width: 40px;
+	height: 40px;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+#header_menu .log:hover {
+    text-decoration: underline;
+}
+
+#header_menu a.btn_com {
+	background: #5573E8;
+}
+
+.header_profile{
+	border-radius: 50%;
+}
+
+/* Contents */
+#contents {
+	position: relative;
+    width: 100%;
+    min-width: 1400px;
+    margin-top: 80px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+#contents_title {
+	padding: 80px;
+    background: #111 url(../images/bg/bg_title.jpg) no-repeat bottom;
+  	background-size: cover;
+  	text-align: center;
+    color: #FFF;
+}
+
+#contents_detail {
+    padding: 80px;
+    text-align: center;
+}
+
+/* Footer */
+#footer {
+    width: 100%;
+    height: 80px;
+    min-width: 1400px;
+    background: #FFF;
+    padding: 0 80px;
+    border-top: 1px solid #CCC;
+    line-height: 80px;
+    color: #CCC;
+    box-sizing: border-box;
+}
+
+#footer_logo {
+    float: left;
+    margin-right: 40px;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+#footer_info {
+    float: left;
+}
+
+#footer_info p {
+	line-height: 80px;
+}
+
+/* My Card */
+#my_card {
+    width: 100%;
+    background: #FFF;
+    margin-top: 20px;
+    border: 1px solid #CCC;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+#my_card .my_card_wrap {
+	padding: 20px;
+    box-sizing: border-box;
+}
+
+#my_card .card_badge {
+	float: left;
+	width: 70px;
+	height: 70px;
+	margin-right: 15px;
+}
+
+#my_card .card_info_box {
+	height: 70px;
+	text-align: left;
+}
+
+#my_card .card_info_box p {
+	margin-top: 5px;
+}
+
+#my_card .card_info_icon {
+	margin-top: 20px;
+	display: inline-block;
+}
+
+#my_card .card_info_icon li a:hover {
+	font-weight: bold;
+	transition: all 0.2s;
+}
+
+#my_card .card_tap {
+	width: 100%;
+	border-top: 1px solid #CCC;
+	border-bottom: 1px solid #CCC;
+	text-align: center;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+
+#my_card .card_tap li {
+	float: left;
+	width: 25%;
+}
+
+#my_card .card_tap li a {
+	width: 100%;
+	background: #EEE;
+	display: inline-block;
+	transition: all 0.2s;
+	cursor: pointer;
+}
+
+#my_card .card_tap li a:hover {
+	background: #111;
+	color: #FFF;
+}
+
+#my_card .card_tap li a.active {
+	background: #111;
+	color: #FFF;
+}
+
+#my_card .card_tap_contents {
+	position: relative;
+	width: 100%;
+	height: 300px;
+	margin-top: -1px;
+	border-top: 1px solid #CCC;
+	border-bottom: 1px solid #CCC;
+	overflow: auto;
+}
+
+#my_card .tap_c {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	text-align: left;
+}
+
+#my_card .tap_list p {
+	margin-top: -3px;
+}
+
+#my_card .tap_list li {
+	margin-top: -1px;
+	border-top: 1px solid #CCC;
+	border-bottom: 1px solid #CCC;
+	cursor: pointer;
+}
+
+#my_card .tap_list .tap_list_top .row_top {
+    float: left;
+    margin-right: 5px;
+}
+
+#my_card .tap_list .tap_list_top .date {
+	color: #CCC;
+}
+
+#my_card .tap_list .tap_list_del {
+	float: right;
+	margin-top: -28px;
+	z-index: 10;
+}
+
+#my_card .tap_list .tap_list_del a {
+	display: inline-block;
+	cursor: pointer;
+}
+
+#my_card .tap_list .tap_list_del a img {
+	width: 10px;
+	height: 10px;
+}
+
+#my_card .tap_list .view_active {
+	width: 180px;
+}
+
+#my_card .tap_list .view_active.active {
+	opacity: 0.3;
+}
+
+#my_card .tap_wrap {
+	padding: 10px;
+    box-sizing: border-box;
+}
+
+#my_card .tap_side_menu {
+	text-align: left;
+	overflow: hidden;
+}
+
+#my_card .tap_side_menu .side_menu li,
+#my_card .tap_side_menu .side_menu li::after {
+    margin-left: 5px;
+}
+
+#my_card .tap_side_menu input[type="button"] {
+	float: right;
+	border: none;
+	outline: none;
+	padding: 3px 6px;
+	background: #999;
+	border-radius: 5px;
+	color: #FFF;
+	box-sizing: border-box;
+	cursor: pointer;
+	transition: all 0.2s;
+}
+
+#my_card .tap_side_menu input[type="button"]:hover {
+	background: #111;
+}
+
+#my_card .tap_board {
+	padding: 20px;
+	text-align: left;
+	box-sizing: border-box;
+}
+
+#my_card .tap_board li {
+	margin-bottom: 10px;
+	font-weight: bold;
+}
+
+#my_card .tap_board li a {
+	font-weight: normal;
+	float: right;
+	transition: all 0.2s;
+}
+
+#my_card .tap_board li a:hover {
+	text-decoration: underline;
+}
+
+#my_card .btn_mypage {
+    width: 100%;
+    display: inline-block;
+    box-sizing: border-box;
+}

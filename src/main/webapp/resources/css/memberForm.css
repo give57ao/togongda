@@ -1,0 +1,148 @@
+@charset "utf-8";
+
+/* Form Common */
+#contents_detail h1 {
+    margin-bottom: 40px;
+}
+
+/* Login Form */
+#login_form {
+    width: 400px;
+    display: inline-block;
+}
+
+#login_form input:nth-child(2) {
+    margin-top: 10px;
+}
+
+#login_menu {
+    margin: 20px auto 40px;
+    color: #999;
+    display: inline-block;
+}
+
+/* Join Form */
+#join_form {
+    width: 600px;
+    display: inline-block;
+}
+
+#join_form table {
+	margin-bottom: 30px;
+	box-sizing: border-box;
+}
+
+#join_form table tr {
+	width: 610px;
+	height: 45px;
+	line-height: 45px;
+    text-align: left;
+    display: inline-block;
+}
+
+#join_form table tr th {
+    width: 30%;
+    font-size: 1.2em;
+}
+
+#join_form table tr td {
+    width: 500px;
+}
+
+#join_form table tr td input {
+    width: 100%;
+}
+
+#join_form table .check input {
+    width: 310px;
+}
+
+#join_form table .check input[type="submit"] {
+	float: right;
+    width: 100px;
+    margin-top: 5px;
+}
+
+#join_form table .check button {
+	float: right;
+    width: 100px;
+    margin-top: 5px;
+}
+
+#join_form table .checkbox input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    border: 2px solid #111;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#join_form table .checkbox input[type="checkbox"]:checked {
+    background: #111 url(../images/icon/icon_check.svg) no-repeat center;
+}
+
+#join_form table .checkbox .btn_check {
+	float: right;
+    width: 100px;
+    margin-top: 5px;
+}
+
+#join_form table .checkbox label {
+    margin-left: 5px;
+    margin-right: 148px;
+    vertical-align: middle;
+}
+
+#join_form .captcha {
+	margin: 30px 0 40px;
+}
+
+#join_form #btn_wrap {
+    width: 100%;
+    display: inline-block;
+}
+
+#join_form #btn_wrap input {
+    width: 295px;
+}
+
+#join_form #btn_wrap input:nth-child(2) {
+    margin-left: 5px;
+}
+
+/* Find Form */
+.find_form {
+	margin: 50px auto;
+}
+
+.find_form h2 {
+	margin-bottom: 50px;
+}
+
+.find_form h2 b {
+	font-size: 1.6em;
+	color: #5573E8;
+}
+
+.emailChk {
+	margin-bottom: 60px;
+}
+
+.emailChk .doubleChk {
+	margin-top: 5px;
+	height: 38px;
+	text-align: center;
+	width: 100px;
+	float: right;
+	background: #111;
+	border: none;
+	border-radius: 10px;
+	color: #FFF;
+	cursor: pointer;
+	line-height: 38px;
+	transition: all 0.2s;
+}
+.emailChk .doubleChk:hover{
+	background: #5573E8;
+}
