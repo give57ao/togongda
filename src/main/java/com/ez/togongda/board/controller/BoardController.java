@@ -47,7 +47,7 @@ public class BoardController {
 		boardService.test();
 		
 		
-		return "main";
+		return "board";
 	}
 
 }
