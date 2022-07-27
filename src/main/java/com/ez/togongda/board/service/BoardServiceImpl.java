@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.ez.togongda.board.mapper.BoardMapper;
+import com.ez.togongda.board.model.BoardModel;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -19,6 +20,11 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void test() {
 		boardMapper.test();
+	}
+
+	@Override
+	public List<BoardModel> boardList() {
+		return boardMapper.boardList();
 	}
 
 

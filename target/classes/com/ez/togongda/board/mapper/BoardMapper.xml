@@ -8,4 +8,22 @@
 SELECT COUNT(*) FROM BOARD
 </select>
 	
+<select id="boardList" resultType="hashMap">
+SELECT board_title, board_date, board_no, board_file_check FROM BOARD
+</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </mapper>
+

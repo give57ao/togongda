@@ -8,11 +8,7 @@
 <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
 </head>
 <body>
-<!-- 토스트 그리드 -->
-<div id="grid"></div>
-el : 그리드가 생성되는 컨테이너 엘리먼트 지정
-columns : 그리드 컬럼 정보 설정
-data : 초기 생성 데이터 설정
+
 
 
 <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
@@ -21,68 +17,56 @@ data : 초기 생성 데이터 설정
 <script>
 window.onload = function(){
 	
-/*     $.ajax({
+    $.ajax({
         url : "/togongda/getBoardList",
-        method :"GET",
+        method :"POST",
         dataType : "JSON",
         success : function(result){
+        	console.dir(result);
             grid.resetData(result);
         } 
-    }); */
-    
+    }); 
     
     const grid = new tui.Grid({
       el: document.getElementById('grid'),
       scrollX: false,
       scrollY: false,
+      height:500,
+      width:500,
       columns: [
     	    {
-    	      header: 'Name',
-    	      name: 'name'
+    	      header: 'board_title',
+    	      name: 'board_title'
     	    },
     	    {
-    	      header: 'Artist',
-    	      name: 'artist'
+    	      header: 'board_date',
+    	      name: 'board_date'
     	    },
     	    {
-    	      header: 'Price',
-    	      name: 'price'
+    	      header: 'board_no',
+    	      name: 'board_no'
     	    },
     	    {
-    	      header: 'Genre',
-    	      name: 'genre'
+    	      header: 'board_file_check',
+    	      name: 'board_file_check'
     	    }
-    	  ],
-    	  data: [
-    		    {
-    		      name: 'Beautiful Lies',
-    		      artist: 'Birdy',
-    		      price: 10000,
-    		      genre: 'Pop'
-    		    }
-    		  ]
+    	  ]
+   
+    
+    
     });
-    /* 데이터를 추가 시 rowData를 선언하고 */
-    const rowData = [
-    	  {
-    	    name: 'X',
-    	    artist: 'Ed Sheeran',
-    	    price: 20000,
-    	    genre: 'Pop'
-    	  },
-    	  {
-    	    name: 'A Head Full Of Dreams',
-    	    artist: 'Coldplay',
-    	    price: 25000,
-    	    genre: 'Rock'
-    	  }
-    	];
-/* rowData를 그리드에 추가시킬 수 있음  */
-    	rowData.forEach(row => {
-    	  grid.appendRow(row);
-    	});
-    	
-    	};
-</script>
+    
+
+ 
+    
+}
+
+ </script>
+ 
+ <!-- 토스트 그리드 -->
+<div id="grid"></div>
+el : 그리드가 생성되는 컨테이너 엘리먼트 지정
+columns : 그리드 컬럼 정보 설정
+data : 초기 생성 데이터 설정
 </body>
 </html>
