@@ -12,49 +12,55 @@
 
 
 <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
+
 <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
 
 <script>
 window.onload = function(){
-	
-    $.ajax({
+
+        
+     $.ajax({
         url : "/togongda/getBoardList",
         method :"POST",
         dataType : "JSON",
-        success : function(result){
-        	console.dir(result);
-            grid.resetData(result);
+        success : function(list){
+        	console.dir(list);
+           const grid = new tui.Grid({
+        	      el: document.getElementById('grid'),
+        	      scrollX: false,
+        	      scrollY: false,
+        	      height:500,
+        	      width:500,	
+        	      columns: [
+        	    	    {
+        	    	      header: 'board_title',
+        	    	      name: 'board_title'
+        	    	    },
+        	    	    {
+        	    	      header: 'board_date',
+        	    	      name: 'board_date'
+        	    	    },
+        	    	    {
+        	    	      header: 'board_no',
+        	    	      name: 'board_no'
+        	    	    },
+        	    	    {
+        	    	      header: 'board_file_check',
+        	    	      name: 'board_file_check'
+        	    	    }
+        	    	  ]
+        	   
+        	    
+        	    
+        	    });
+          // grid.resetData(list);
+       	
+         
+         
         } 
     }); 
-    
-    const grid = new tui.Grid({
-      el: document.getElementById('grid'),
-      scrollX: false,
-      scrollY: false,
-      height:500,
-      width:500,
-      columns: [
-    	    {
-    	      header: 'board_title',
-    	      name: 'board_title'
-    	    },
-    	    {
-    	      header: 'board_date',
-    	      name: 'board_date'
-    	    },
-    	    {
-    	      header: 'board_no',
-    	      name: 'board_no'
-    	    },
-    	    {
-    	      header: 'board_file_check',
-    	      name: 'board_file_check'
-    	    }
-    	  ]
    
-    
-    
-    });
     
 
  

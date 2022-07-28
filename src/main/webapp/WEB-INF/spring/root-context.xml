@@ -8,34 +8,34 @@
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<!-- MySQL dataSource -->    
+    <bean id="dataSource"
+        class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        
+		<!-- <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://teen.ctrdjwzpdijw.ap-northeast-2.rds.amazonaws.com:3306/teen?useSSL=false"></property>
+         -->
+         <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
+         <property name="url" value="jdbc:log4jdbc:mysql://teen1.ctrdjwzpdijw.ap-northeast-2.rds.amazonaws.com:3306/teen?useSSL=false" />
 
-	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-		<property name="driverClassName"
-			value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
-		<property name="jdbcUrl"
-			value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"></property>
-		<!-- <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property> 
-			<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:xe"></property> -->
-		<!-- Oracle 11g 경우 value="jdbc:oracle:thin:@localhost:1521:XE" -->
-		<!-- Oracle 19 경우 value="jdbc:oracle:thin:@localhost:1521:oracle" -->
-		<!-- Oracle 버전에 따라 계정명에 c##을 붙여주어야 하는 경우가 있습니다. -->
-		<property name="username" value="teen"></property>
-		<property name="password" value="oracle"></property>
-	</bean>
-
-	<bean id="datasource" class="com.zaxxer.hikari.HikariDataSource"
-		destroy-method="close">
-		<constructor-arg ref="hikariConfig"></constructor-arg>
-	</bean>
-
-	<bean id="sqlSessionFactory"
+        
+        <property name="username" value="teen1"></property>
+        <property name="password" value="xlszhej1!"></property>
+    </bean>      
+    
+    <bean id="sqlSessionFactory"
 		class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="datasource"></property>
-		<property name="configLocation"
-			value="classpath:/mybatis-config.xml"></property>
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocation" value="classpath:/mybatis-config.xml"></property>
+		
 	</bean>
-
-  	<mybatis-spring:scan base-package="com.ez.togongda/**/mapper"/>
-
-
+	
+	<bean id="sqlSession"
+		class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg  ref="sqlSessionFactory"></constructor-arg>
+	</bean>
+	
+	  	<mybatis-spring:scan base-package="com.ez.togongda/**/mapper"/>
 </beans>
