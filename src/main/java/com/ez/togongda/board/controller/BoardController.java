@@ -22,15 +22,16 @@ public class BoardController {
 	public String main() {
 		return "board";
 	}
-	
-	@ResponseBody
-	@PostMapping("/getBoardList")
-	public ResponseEntity<HashMap<String, Object>> getBoardList(){
-		
-		HashMap<String, Object> result = new HashMap<>();
-		result.put("list", boardService.boardList());
-		
-		return ResponseEntity.ok(result);
-	}
+	/*
+	 * @ResponseBody
+	 * 
+	 * @GetMapping("/getBoardList") public ResponseEntity<HashMap<String, Object>>
+	 * getBoardList(){
+	 * 
+	 * HashMap<String, Object> result = new HashMap<>(); result.put("list",
+	 * boardService.boardList());
+	 * 
+	 * return ResponseEntity.ok(result); }
+	 */
 
 }
