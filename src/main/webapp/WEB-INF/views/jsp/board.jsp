@@ -58,6 +58,21 @@
 					grid.resetData(result);
 				}// suc
 			}); //ajax 
+			
+/* 			$.ajax({
+		        type: "POST",
+		        url : "togongda/getCovidList",
+		        headers: {'Content-Type': 'application/json'},
+				dataType : "JSON",
+		        success : function (data){
+		        	console.log(data);
+		        },
+		        error : function(e){
+		        }
+		}) */
+			
+			
+			
 
 			var pagination2 = new tui.Pagination(document
 					.getElementById('pagination2'), {

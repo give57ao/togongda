@@ -7,18 +7,23 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.List;
-import java.util.Map;
-import org.json.XML;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import javax.servlet.http.HttpServletRequest;
+
+import org.json.XML;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ez.togongda.board.model.BoardModel;
+import com.ez.togongda.board.model.CovidModel;
 import com.ez.togongda.board.service.BoardService;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 @RestController
 public class RestBoardController {
@@ -30,25 +35,45 @@ public class RestBoardController {
 	public List<BoardModel> getBoardList() throws IOException, ParseException {
 		List<BoardModel> result = boardService.boardList();
 		
-		String xml = getCovidData();
-
-		System.out.println("xml :"+ xml);
-		/*
-		 * JSONParser parser = new JSONParser(); 
-		 * JSONObject jsonObject = (JSONObject)  parser.parse(strJson); // JSON 객체의 값 읽어서 출력하기
-		 * System.out.println(jsonObject.get("isolClearCnt")); // apple
-		 * System.out.println(jsonObject.get("gubun")); // 1
-		 * System.out.println(jsonObject.get("deathCnt")); // 1000
-		 */
 		
+		String xml = getCovidData();		
 		Object json = XML.toJSONObject(xml); //xml -> json
-        String jsonStr = json.toString();
-        System.out.println("xml -> json :"+ jsonStr);
+        String jsonStr = json.toString(); // json -> string
+        System.out.println("xml : " + xml);
+        System.out.println("===========================================");
+        System.out.println("json : " + jsonStr); 
+    
+        JsonParser jsonParser = new JsonParser();
+        JsonObject jsonObject = (JsonObject)jsonParser.parse(jsonStr); 
         
-		
+        System.out.println("jsonObject :" + jsonObject);
+        
+        JsonObject covidInfoResponse = (JsonObject)jsonObject.get("response");
+        JsonObject covidInfoBody = (JsonObject)covidInfoResponse.get("body");
+        JsonObject covidInfoItems = (JsonObject)covidInfoBody.get("items");
+        JsonObject covidInfoItem = (JsonObject)covidInfoItems.get("item");
+//        JsonObject gubunEn = (JsonObject)covidInfoItem.get("gubunEn");
+
+        System.out.println("body :" + covidInfoBody);
+        System.out.println("items :" + covidInfoItems);
+        System.out.println("item :" + covidInfoItem);
+//        System.out.println("gubunEn :" + gubunEn);
+        
+        
+        
 		return result;
 	}
 	
+	@PostMapping("/getCovidList")
+	@ResponseBody
+	public ResponseEntity<CovidModel>  getCovidList(HttpServletRequest req) throws IOException{
+		
+		
+		String xml = getCovidData();		
+		Object json = XML.toJSONObject(xml); //xml -> json
+        String jsonStr = json.toString(); // json -> string
+        return new ResponseEntity<CovidModel>(HttpStatus.OK);
+	}
 	
 	
 	// 공공 데이터를 받아오는 메서드
@@ -80,7 +105,10 @@ public class RestBoardController {
         rd.close();
         conn.disconnect();
 
-        return sb.toString();
+       String result =  sb.toString();
+       
+       
+       return result;
 	}
 	
 	
