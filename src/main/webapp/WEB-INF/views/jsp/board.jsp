@@ -10,10 +10,12 @@
 	href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
 <link rel="stylesheet"
 	href="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css" />
+<link rel="stylesheet" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css" />
+
 </head>
 <body>
 
-
+<script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
 
 	<script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
 	<script
@@ -23,10 +25,12 @@
 	<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 
 
+
+
 	<script>
 		window.onload = function() {
 
-			$.ajax({
+			/* $.ajax({
 				url : "/togongda/getBoardList",
 				method : "POST",
 				dataType : "JSON",
@@ -58,7 +62,7 @@
 					grid.resetData(result);
 				}// suc
 			}); //ajax 
-			
+ */			
 			//공공 데이터
 			$.ajax({
 				url : "/togongda/getCovidList",
@@ -118,14 +122,23 @@
 			
 			
 
-			var pagination2 = new tui.Pagination(document
+			/* var pagination2 = new tui.Pagination(document
 					.getElementById('pagination2'), {
 				totalItems : 500,
 				itemsPerPage : 10,
 				visiblePages : 5,
 				centerAlign : true
-			});
-
+			}); */
+			
+			 var datepicker = new tui.DatePicker('#wrapper', {
+		            date: new Date(),
+		            input: {
+		                element: '#datepicker-input',
+		                format: 'yyyy-MM-dd'  
+		            }
+		        });
+			
+			
 		}; //window onload
 	</script>
 
@@ -134,7 +147,26 @@
 	
 	<div id="grid1"></div>
 	
+	
+	<div class="tui-datepicker-input tui-datetime-input tui-has-focus">
+		<input type="text" id="datepicker-input" aria-label="Date-Time">
+		<span class="tui-ico-date"></span>
+	</div>
+	<div id="wrapper" style="margin-top: -1px;"></div>
+	
+	<div id="search">
+						<select class="dropdown" id="selectBoxTest">
+                        	<option value="경기" id="gu" selected>경기</option>
+                            <option value="서울" id="so">서울</option>
+                            <option value="부산" id="bu">부산</option>
+                            <option value="대구" id="gu">대구</option>
+                            <option value="대전" id="da">대전</option>
+                            <option value="제주" id="ja">제주</option>
+                        </select>
+	</div>
 	<!-- 페이지네이션 -->
-	<div id="pagination2" class="tui-pagination"></div>
+	<!-- <div id="pagination2" class="tui-pagination"></div> -->
+
+
 </body>
 </html>
