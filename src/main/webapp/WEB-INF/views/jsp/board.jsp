@@ -1,31 +1,21 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Board</title>
-<link rel="stylesheet"
-	href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
-<link rel="stylesheet"
-	href="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css" />
+<link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
+<link rel="stylesheet" href="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css" />
 <link rel="stylesheet" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css" />
-
 </head>
+
 <body>
-
 <script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
+<script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
+<script src="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.js"></script>
 
-	<script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
-	<script
-		src="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.js"></script>
-	<!-- <script type="text/javascript" src="/togongda/resources/js/tui-grid.js"></script>
- -->
-	<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-
-
-
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 
 	<script>
 		window.onload = function() {
@@ -69,8 +59,8 @@
 				method : "POST",
 				dataType : "JSON",
 				contentType : "application/json; charset=UTF-8",
-				success : function(result) {
-					console.dir(result);
+				success : function(list) {
+					console.dir(list);
 
 					var grid1 = new tui.Grid({
 						el : document.getElementById('grid1'),
@@ -113,7 +103,7 @@
 
 					}); //grid 
 
-					grid1.resetData(result);
+					grid1.resetData(list);
 				}// suc
 			}); //ajax 
 			
@@ -140,6 +130,10 @@
 			
 			
 		}; //window onload
+		
+		function searchBoard(){
+			
+		}
 	</script>
 
 	<!-- 토스트 그리드 -->
@@ -147,7 +141,7 @@
 	
 	<div id="grid1"></div>
 	
-	
+	<!--  데이트피커 -->
 	<div class="tui-datepicker-input tui-datetime-input tui-has-focus">
 		<input type="text" id="datepicker-input" aria-label="Date-Time">
 		<span class="tui-ico-date"></span>
@@ -164,6 +158,10 @@
                             <option value="제주" id="ja">제주</option>
                         </select>
 	</div>
+	
+	 <div class="search">
+     <button class="btn_search" onClick="searchBoard()">검색</button>
+     </div>
 	<!-- 페이지네이션 -->
 	<!-- <div id="pagination2" class="tui-pagination"></div> -->
 

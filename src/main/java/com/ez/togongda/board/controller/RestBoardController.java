@@ -13,16 +13,17 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.json.XML;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ez.togongda.board.model.BoardModel;
 import com.ez.togongda.board.service.BoardService;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
@@ -41,7 +42,7 @@ public class RestBoardController {
 	}
 	
 	@PostMapping("/getCovidList")
-	@ResponseBody
+//	@ResponseBody
 	public List<Map<String, Object>> getCovidList(HttpServletRequest req) throws IOException{
 		
 		
@@ -56,31 +57,24 @@ public class RestBoardController {
         JsonObject covidInfoResponse = (JsonObject)jsonObject.get("response");
         JsonObject covidInfoBody = (JsonObject)covidInfoResponse.get("body"); // pageNo, totalCount
         JsonObject covidInfoItems = (JsonObject)covidInfoBody.get("items");
-        JsonObject covidInfoItem = (JsonObject)covidInfoItems.get("item"); //여기있는 아이템을 covid model에 넣어야 함
-
-        System.out.println("================================================================");
-        System.out.println("pageNo :" + covidInfoBody.get("pageNo"));
-        System.out.println("totalCount :" + covidInfoBody.get("totalCount"));
-        System.out.println("================================================================");
-        System.out.println("stdDay (기준일자) :" + covidInfoItem.get("stdDay") );
-        System.out.println("deathCnt (누적 사망자 수):" + covidInfoItem.get("deathCnt") );
-        System.out.println("defCnt (누적 확진자 수) :" + covidInfoItem.get("defCnt") );
-        System.out.println("isolClearCnt (누적 격리해제 수) :" + covidInfoItem.get("isolClearCnt") );
-        System.out.println("localOccCnt (지역발생수) :" + covidInfoItem.get("localOccCnt") );
-        System.out.println("qurRate (만명당 발생 확률) :" + covidInfoItem.get("qurRate") );
-        System.out.println("overFlowCnt (해외 유입 수) :" + covidInfoItem.get("overFlowCnt") );
-        System.out.println("incDec (전일 대비 확진자 증감 수) :" + covidInfoItem.get("incDec") );
-        System.out.println("isolIngCnt (누적 격리 해제 수) :" + covidInfoItem.get("isolIngCnt") );
-        System.out.println("gubun (시도 명)  :" + covidInfoItem.get("gubun") );
-        System.out.println("================================================================");
         
-        Map<String, Object> map = getMapFromJsonObject(covidInfoItem); //json데이터 -> map으로 바꾸는 메서드 실행 후 map 변수에 저장
-        List<Map<String, Object>> result = null; //리스트 선언
+        JsonArray covidInfoItem = (JsonArray)covidInfoItems.get("item");   //item은 배열 형태 이기 때문에 JsonArray 형태로 변환
+               
+        List<Map<String, Object>> result = null; //마지막에 return할 List 선언
+		result = new ArrayList<>();  //list 초기화
 
-		result = new ArrayList<>(); 
-		result.add(map); //저장된 map에 리스트를 넣고
+        
+        if (covidInfoItem != null) { 
+           int len = covidInfoItem.size(); //JsonArray의 개수를 len에 대입
+           for (int i=0;i<len;i++){ //배열 크기만큼 반복
+        	  JsonObject jso = (JsonObject) covidInfoItem.get(i); //JsonArray안에 있는 값들의 순서대로 JsonObject로 변환
+        	  Map<String, Object> map = getMapFromJsonObject(jso); //변환한 JsonObject는 JSONObject를 Map<String, String> 형식으로 변환처리
+        	  result.add(map); //변환한 jso가 담긴 map이 list에 순서대로 담음
+        } 
+        }
+        
 
-        return result; //ajax에게 넘겨줌 
+        return result; // 담은 result를 ajax에게 넘겨줌 
 	}
 	
 	/**
@@ -118,7 +112,7 @@ public class RestBoardController {
         urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("500", "UTF-8")); /*한 페이지 결과 수*/
         urlBuilder.append("&" + URLEncoder.encode("apiType","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*결과형식(xml/json)*/
         urlBuilder.append("&" + URLEncoder.encode("std_day","UTF-8") + "=" + URLEncoder.encode("2022-05-15", "UTF-8")); /*기준일자*/
-        urlBuilder.append("&" + URLEncoder.encode("gubun","UTF-8") + "=" + URLEncoder.encode("경기", "UTF-8")); /*시도명*/
+//        urlBuilder.append("&" + URLEncoder.encode("gubun","UTF-8") + "=" + URLEncoder.encode("경기", "UTF-8")); /*시도명*/
         URL url = new URL(urlBuilder.toString());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
