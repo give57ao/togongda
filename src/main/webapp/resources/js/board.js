@@ -175,8 +175,8 @@ function getCheckboxValue()  {
 			console.log(dateArray);
 			
 			  const objParams = {
-                        "resultArray"      : resultArray, 
-                        "dateArray" : dateArray        
+                        "resultArray" : JSON.stringify(resultArray), 
+                        "dateArray" : JSON.stringify(dateArray)       
                     };
                     
                     console.log(objParams);
@@ -189,10 +189,10 @@ function getCheckboxValue()  {
 				data : objParams,
 				contentType : "application/json; charset=UTF-8",
 				success : function(result) {
-					alert(objParams);
+					console.log(objParams);
 					grid1.resetData(result);
 				}// suc
-				 ,error:function(){        alert("objParams = "+ objParams); // 실패 시 처리       
+				 ,error:function(){        consle.log("objParams = "+ objParams); // 실패 시 처리       
 				}
 			}); //ajax 
 
