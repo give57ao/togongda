@@ -88,7 +88,7 @@ window.onload = function() {
 			
 
 			
-			var today = new Date();
+			/*var today = new Date();
 			var yesterday = new Date(today.setDate(today.getDate()-1));
 			
 			 var datepicker = new tui.DatePicker('#wrapper', {
@@ -97,9 +97,25 @@ window.onload = function() {
 		                element: '#datepicker-input',
 		                format: 'yyyy-MM-dd'  
 		            }
-		        });
-			
-			
+		        });*/
+	var today = new Date();	
+	var yesterDay = new Date(today.setDate(today.getDate() - 1));
+	var picker = tui.DatePicker.createRangePicker({
+		startpicker: {
+			date: today,
+			input: '#startpicker-input',
+			container: '#startpicker-container'
+		},
+		endpicker: {
+			date: today,
+			input: '#endpicker-input',
+			container: '#endpicker-container'
+		},
+		selectableRanges: [
+			[new Date('2020-05-01'), yesterDay]
+		]
+	});
+			/*today.getFullYear() + 1, today.getMonth(), today.getDate()*/
 		}; //window onload
 		
 		function search(){
@@ -121,3 +137,5 @@ window.onload = function() {
 			
 			
 		}
+		
+		

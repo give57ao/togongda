@@ -21,12 +21,24 @@
 	<div id="grid1"></div>
 	
 	<!--  데이트피커 -->
-	<div class="tui-datepicker-input tui-datetime-input tui-has-focus">
+	<!-- <div class="tui-datepicker-input tui-datetime-input tui-has-focus">
 		<input type="text" id="datepicker-input" aria-label="Date-Time">
 		<span class="tui-ico-date"></span>
 	</div>
-	<div id="wrapper" style="margin-top: -1px;"></div>
+	<div id="wrapper" style="margin-top: -1px;"></div> -->
 	
+	<!-- DateRangePicker -->
+	  <div class="tui-datepicker-input tui-datetime-input tui-has-focus">
+        <input id="startpicker-input" type="text" aria-label="Date">
+        <span class="tui-ico-date"></span>
+        <div id="startpicker-container" style="margin-left: -1px;"></div>
+    </div>
+    <span>to</span>
+    <div class="tui-datepicker-input tui-datetime-input tui-has-focus">
+        <input id="endpicker-input" type="text" aria-label="Date">
+        <span class="tui-ico-date"></span>
+        <div id="endpicker-container" style="margin-left: -1px;"></div>
+    </div>
 	
 	 <div class="search">
      <button class="btn_search" onClick="search()">조회</button>
