@@ -1,7 +1,7 @@
 			const grid1 = new tui.Grid({
 				el : document.getElementById('grid1'),
 				scrollX : false,
-				scrollY : false,
+				scrollY : true,
 			
 				columns : [ {
 					header : '기준일자',
@@ -118,20 +118,82 @@ window.onload = function() {
 			/*today.getFullYear() + 1, today.getMonth(), today.getDate()*/
 		}; //window onload
 		
+		
+		function getDateRangeData(param1, param2){  //param1은 시작일, param2는 종료일이다.
+	var res_day = [];
+ 	var ss_day = new Date(param1);
+   	var ee_day = new Date(param2);    	
+  		while(ss_day.getTime() <= ee_day.getTime()){
+  			var _mon_ = (ss_day.getMonth()+1);
+  			_mon_ = _mon_ < 10 ? '0'+_mon_ : _mon_;
+  			var _day_ = ss_day.getDate();
+  			_day_ = _day_ < 10 ? '0'+_day_ : _day_;
+   			res_day.push(ss_day.getFullYear() + '-' + _mon_ + '-' +  _day_);
+   			ss_day.setDate(ss_day.getDate() + 1);
+   	}
+   	return res_day;
+}
+
+function getCheckboxValue()  {
+  // 선택된 목록 가져오기
+  const query = 'input[name="gubun"]:checked';
+  const selectedEls = document.querySelectorAll(query);
+  
+  // 선택된 목록에서 value 찾기
+  let result = '';
+  selectedEls.forEach((el) => {
+    result += el.value + ' ';
+  });
+  resultArray = result.split(' ');
+  console.log(resultArray);
+}
+		
+		
 		function search(){
-			var date = document.getElementById('datepicker-input').value;
+			
+			/*
+			선택한 구분값 구하기 resultArray
+			*/
+			const query = 'input[name="gubun"]:checked'; //gubun name을 가진 input값의 checked값들만 가져온다
+			const selectedEls = document.querySelectorAll(query);
+
+			let result = '';
+			selectedEls.forEach((el) => {
+				result += el.value + ' '; //스페이스바를 줌으로서 기준점을 주는데
+			});
+			trimResult = result.trim();
+			resultArray = trimResult.split(' '); //스페이스바를 기준으로 배열이 생성되면서 마지막 result값에 스페이스바도 나뉘어짐
+			console.log(resultArray);
+			
+			
+			/*
+			선택한 기간 구하기 dateArray
+			*/
+			var startDate = document.getElementById('startpicker-input').value;
+			var endDate = document.getElementById('endpicker-input').value;
+			var dateArray = getDateRangeData(startDate, endDate);
+			console.log(dateArray);
+			
+			  const objParams = {
+                        "resultArray"      : resultArray, 
+                        "dateArray" : dateArray        
+                    };
+                    
+                    console.log(objParams);
+			
+			
 			$.ajax({
-				url : "/togongda/searchCovidList?date=" + date,
+				url : "/togongda/searchCovidList",
 				method : "POST",
 				dataType : "JSON",
-				data : date,
+				data : objParams,
 				contentType : "application/json; charset=UTF-8",
 				success : function(result) {
-					console.log(date);
-					console.dir(result);
-					
+					alert(objParams);
 					grid1.resetData(result);
 				}// suc
+				 ,error:function(){        alert("objParams = "+ objParams); // 실패 시 처리       
+				}
 			}); //ajax 
 
 			

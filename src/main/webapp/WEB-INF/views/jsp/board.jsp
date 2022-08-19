@@ -39,7 +39,41 @@
         <span class="tui-ico-date"></span>
         <div id="endpicker-container" style="margin-left: -1px;"></div>
     </div>
-	
+
+
+		
+										<input type="checkbox" name="gubun" value="경북" >
+			                            <label for="html">경북</label>
+			                            <input type="checkbox" name="gubun" value="충남" >
+			                            <label for="충남">충남</label>
+			                            <input type="checkbox" name="gubun" value="부산" >
+			                            <label for="부산">부산</label>
+			                            <input type="checkbox" name="gubun" value="대구" >
+			                            <label for="대구">대구</label>
+			                            <input type="checkbox" name="gubun" value="충북" >
+			                            <label for="충북">충북</label>
+			                            <input type="checkbox" name="gubun" value="전남" >
+			                            <label for="전남">전남</label>
+			                            <input type="checkbox" name="gubun" value="세종" >
+			                            <label for="세종">세종</label>
+			                            <input type="checkbox" name="gubun" value="인천" >
+			                            <label for="인천">인천</label>
+			                            <input type="checkbox" name="gubun" value="광주" >
+			                            <label for="광주">광주</label>
+			                            <input type="checkbox" name="gubun" value="서울" >
+			                            <label for="서울">서울</label>
+			                            <input type="checkbox" name="gubun" value="경기" >
+			                            <label for="경기">경기</label>
+			                            <input type="checkbox" name="gubun" value="전남" >
+			                            <label for="광주">광주</label>
+			                            <input type="checkbox" name="gubun" value="강원" >
+			                            <label for="강원">강원</label>
+			                            <input type="checkbox" name="gubun" value="검역" >
+			                            <label for="검역">검역</label>
+			                            <input type="checkbox" name="gubun" value="경남" >
+			                            <label for="경남">경남</label>
+
+			                           
 	 <div class="search">
      <button class="btn_search" onClick="search()">조회</button>
      </div>

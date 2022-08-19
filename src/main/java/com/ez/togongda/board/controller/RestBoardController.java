@@ -120,7 +120,7 @@ public class RestBoardController {
 		StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1352000/ODMS_COVID_04/callCovid04Api"); /*URL*/
         urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=Joxg8eWSKuzXLDh4EahL8TaX4%2BFovgUQi2ZjrooZPMH4r9Ez8CZRajVjua3I9aBABKatg5E3lGVpkcBm5%2FoVUQ%3D%3D"); /*Service Key(현재 인코딩)*/
         urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
-        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("500", "UTF-8")); /*한 페이지 결과 수*/
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("100", "UTF-8")); /*한 페이지 결과 수*/
         urlBuilder.append("&" + URLEncoder.encode("apiType","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*결과형식(xml/json)*/
         urlBuilder.append("&" + URLEncoder.encode("std_day","UTF-8") + "=" + URLEncoder.encode(date, "UTF-8")); /*기준일자*/
 //        urlBuilder.append("&" + URLEncoder.encode("gubun","UTF-8") + "=" + URLEncoder.encode("경기", "UTF-8")); /*시도명*/
@@ -150,9 +150,17 @@ public class RestBoardController {
 	}
 	
 	@PostMapping(value = "/searchCovidList")
-	public List<Map<String, Object>>  searchCovidList(@RequestParam("date") String date) throws IOException {
+	public List<Map<String, Object>>  searchCovidList() throws IOException {
 
-		String xml = getCovidData(date);		
+		//어제 날짜 구하기 
+		Calendar c1 = Calendar.getInstance(); 
+	    c1.add(Calendar.DATE, -1); // 오늘날짜로부터 -1 
+	    SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
+			
+	    String yesterday = transFormat.format(c1.getTime()); // String으로 저장
+	      		
+		
+		String xml = getCovidData(yesterday);		
 		Object json = XML.toJSONObject(xml); //xml -> json
         String jsonStr = json.toString(); // json -> string
     
