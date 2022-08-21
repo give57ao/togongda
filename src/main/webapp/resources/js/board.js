@@ -180,19 +180,37 @@ function getCheckboxValue()  {
                     };
                     
                     console.log(objParams);
-			
-			
+                    
+                    console.log(typeof(objParams));//object
+                    console.log(typeof(resultArray));//object
+                    console.log(typeof(dateArray)); //object
+                    
+                    console.log(Array.isArray(objParams)); //false
+                    console.log(Array.isArray(resultArray)); //true
+                    console.log(Array.isArray(dateArray)); //true
+                    
+                    console.log('=====================');
+                    
+                    console.log(typeof(JSON.stringify(dateArray))); //String
+                    console.log(JSON.stringify({
+					"resultArray" : JSON.stringify(resultArray), 
+                        "dateArray" : JSON.stringify(dateArray)  
+				}));
+
 			$.ajax({
 				url : "/togongda/searchCovidList",
 				method : "POST",
 				dataType : "JSON",
-				data : objParams,
+				data : JSON.stringify({
+					"resultArray" : JSON.stringify(resultArray), 
+                        "dateArray" : JSON.stringify(dateArray)  
+				}),
 				contentType : "application/json; charset=UTF-8",
 				success : function(result) {
-					console.log(objParams);
 					grid1.resetData(result);
 				}// suc
-				 ,error:function(){        consle.log("objParams = "+ objParams); // 실패 시 처리       
+				 ,error:function(){   
+				console.log('error');     
 				}
 			}); //ajax 
 
