@@ -38,6 +38,26 @@
 				]
 
 			}); //grid 
+			
+			const el = document.getElementById('chart-area');
+			const options = {
+	        chart: { title: '코로나 현황', width: 900, height: 400 },
+	        xAxis: { pointOnColumn: false, title: { text: 'day' } },
+	        yAxis: { title: '만명당 발생확률' },
+	      	};
+	      	
+	    const data = {
+        categories: [
+        ],
+        series: [
+        ],
+      };
+	const chart = toastui.Chart.areaChart({ el, data, options });
+
+			
+			
+			
+			
 window.onload = function() {
 	
 			/* $.ajax({
@@ -86,6 +106,37 @@ window.onload = function() {
 				}// suc
 			}); //ajax 
 			
+						$.ajax({
+				url : "/togongda/getChartCovid",
+				method : "POST",
+				dataType : "JSON",
+				contentType : "application/json; charset=UTF-8",
+				success : function(list) {
+					console.log(list);
+					console.log(Array.isArray(list)); //true
+					
+					const stdDay = list.map(row=>row.stdDay);
+					console.log(stdDay);
+					const gubun = list.map(row=>row.gubun);
+					console.log(gubun);
+					const qurRate = list.map(row=>row.qurRate);
+					console.log(qurRate); //array true
+					
+					
+
+					
+				chart.setData({
+				  categories: stdDay,
+				  series: [
+				    {
+				      name: gubun,
+				      data: qurRate,
+				    }
+				  ]
+				});
+				}//chart suc
+			}); //ajax 
+			
 
 			
 			/*var today = new Date();
@@ -118,8 +169,10 @@ window.onload = function() {
 			/*today.getFullYear() + 1, today.getMonth(), today.getDate()*/
 		}; //window onload
 		
+
 		
-		function getDateRangeData(param1, param2){  //param1은 시작일, param2는 종료일이다.
+		
+	function getDateRangeData(param1, param2){  //param1은 시작일, param2는 종료일이다.
 	var res_day = [];
  	var ss_day = new Date(param1);
    	var ee_day = new Date(param2);    	
@@ -213,9 +266,40 @@ function getCheckboxValue()  {
 				console.log('error');     
 				}
 			}); //ajax 
-
 			
-			
+						$.ajax({
+				url : "/togongda/searchCovidChart",
+				method : "POST",
+				dataType : "JSON",
+				data : JSON.stringify({
+					"resultArray" : JSON.stringify(resultArray), 
+                        "dateArray" : JSON.stringify(dateArray)  
+				}),
+				contentType : "application/json; charset=UTF-8",
+				success : function(list) {
+					
+			  console.log(list);
+					console.log(Array.isArray(list)); //true
+					console.log(list);
+					const stdDay = list.map(row=>row.stdDay);
+					console.log(stdDay);
+					const gubun = list.map(row=>row.gubun);
+					console.log(gubun);
+					const qurRate = list.map(row=>row.qurRate);
+					console.log(qurRate); //array true
+					
+				chart.setData({
+				  categories: stdDay,
+				  series: [
+				    {
+				      name: gubun,
+				      data: qurRate,
+				    }
+				  ]
+				});
+				
+				}//chart suc
+					
+			}); //ajax 		
 		}
-		
 		
