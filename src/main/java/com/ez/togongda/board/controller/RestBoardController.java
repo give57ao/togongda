@@ -8,11 +8,13 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -264,9 +266,9 @@ public class RestBoardController {
         String[] dateArray = null; 
         dateArray = date2.split(",");
         
+        
         List<Map<String, Object>> result = null; //마지막에 return할 List 선언
         result = new ArrayList<>();  //list 초기화
-        Map<String, Object> chartMap = new HashMap<String, Object>();
 
         for(int i=0; i<dateArray.length;i++) {
         	for(int j=0; j<resultArray.length;j++) {
@@ -284,21 +286,96 @@ public class RestBoardController {
         for (int k=0;k<len/2;k++){ //배열 크기만큼 반복
      	  JsonObject jso = (JsonObject) covidInfoItem.get(k); //JsonArray안에 있는 값들의 순서대로 JsonObject로 변환
      	  Map<String, Object> map = getMapFromJsonObject(jso); //변환한 JsonObject는 JSONObject를 Map<String, String> 형식으로 변환처리
-     	  
-//     	  System.out.println(map);
-//     	  
-//     	    chartMap.put("gubun",map.get("gubun"));
-//            chartMap.put("stdDay",map.get("stdDay"));
-//            chartMap.put("qurRate",map.get("qurRate")); //만명당 발생확률
+        
+     	  Map<String, Object> chartMap = new HashMap<String, Object>();
+     	    chartMap.put("gubun",map.get("gubun"));
+            chartMap.put("stdDay",map.get("stdDay"));
+            chartMap.put("qurRate",map.get("qurRate")); //만명당 발생확률
 
-     	  result.add(map); //변환한 jso가 담긴 map이 list에 순서대로 담음
+     	  result.add(chartMap); //변환한 jso가 담긴 map이 list에 순서대로 담음
         }
         }
         }
-		return result;
+        System.out.println(result); 
+
+        
+
+//        for(int i=0; i<resultArray.length;i++) { // 구분갯수만큼 반복
+//        	Map<String, Object> chartMap1 = new HashMap<String, Object>(); //구분 갯수만큼 map이 생성되어 list에 담겨야 하기 때문
+//        	chartMap1.put("name", result.get(i).get("gubun").toString());
+//
+//        	
+//    		String resultStr3 =resultArray[i].substring(0, resultArray[i].length()-1).substring(1);		
+//            String resultStr4 = resultStr3.substring(1);
+//        	
+//            for(int j=0; j<dateArray.length;j++) {  //날짜의 배열 개수
+//            if(result.get(j).get("gubun").toString().equals(resultStr4)) { //만약 구분값이 동일하다면 (파라미터와 result 리스트값)
+//
+//            	qurRateList.add(result.get(j).get("qurRate").toString()); //qurRate 값들을 리스트 하나에 담는다.
+//            	chartMap1.put("data", qurRateList);
+//				/*
+//				 *날짜 배열의 개수만큼 qurRate가 담기는 코드
+//				*/
+//            	}// if end
+//        	chartList.add(chartMap1);
+//
+//            } //날짜 만큼 반복 종료	 	
+//			/*
+//			 * 리스트에 맵을 담는 코드 
+//			 */		
+//            
+//        }// 구분횟수만큼 반복 종료
+        
+
+        List<Map<String, Object>> chartList =  new ArrayList<>();   //마지막에 return할 List 선언
+        
+        for(int i=0; i<resultArray.length;i++) {
+	        Map<String, Object> chartMap1 = new HashMap<String, Object>(); 
+			chartMap1.put("name", result.get(i).get("gubun").toString());
+	        List<String> qurRateList = new ArrayList<String>(); 
+	        List<String> qurList = new ArrayList<String>(); 
+
+
+        	for(int j=0; j<dateArray.length*resultArray.length;j++) {
+        		//result는 8개인데 날짜만큼 반복하면 총 4번 반복함 그러므로 구분횟수만큼 곱해줌
+        		if(result.get(j).get("gubun").equals(resultArray[i].substring(0, resultArray[i].length()-1).substring(1))) { 
+        	        
+            	    qurRateList.add(result.get(j).get("qurRate").toString());		 //qurRateList.size() = 8인 상황
+        		
+        		}
+        		//8번 반복해서 값이 잔뜩 들어간 녀석에게 구분갯수에 맞게 나눈 후 담아준다.
+        			
+        	
+        		
+        	} //날짜 횟수 반복문 end
+        	String data = partition(qurRateList,dateArray.length).toString();
+        	String data2 = data.replace("[", "").replace("]", "");
+        	qurList.add(data2);
+        	chartMap1.put("data", qurList);
+		      
+        	chartList.add(chartMap1);
+
+        } // 구분 횟수 반복 end
+        
+        System.out.println(chartList);
+        
+        
+		/*
+			결국 맵은 구분 갯수만큼 나와야 함
+			리스트에 맵을 담는 행위는 총 구분횟수 반복문 내부에 들어가야 하고			
+			날짜만큼 qurRate가 담겨야 하기 때문에 날짜 반복문 내부에 들어가야 함
+		 */
+        
+        
+        
+		return chartList;
 	}
 
-	
+	//
+	 private static  <T> Collection<List<T>> partition(List<T> list, int size) { 
+		 final AtomicInteger counter = new AtomicInteger (0);
+		 return list.stream ().collect (Collectors.groupingBy (it -> counter.getAndIncrement () / size)).values ();
+		 }
 	
 	
 

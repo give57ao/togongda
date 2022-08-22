@@ -1,4 +1,12 @@
-
+var StringBuffer = function() {
+    this.buffer = new Array();
+};
+StringBuffer.prototype.append = function(str) {
+    this.buffer[this.buffer.length] = str;
+};
+StringBuffer.prototype.toString = function() {
+    return this.buffer.join("");
+};
 
 			
 			const grid1 = new tui.Grid({
@@ -132,8 +140,8 @@ window.onload = function() {
 				  categories: stdDay,
 				  series: [
 				    {
-				      name: gubun,
-				      data: qurRate,
+				      "name": gubun,
+				      "data": qurRate,
 				    }
 				  ]
 				});
@@ -296,46 +304,83 @@ const division = (배열, n개씩) => {
 				contentType : "application/json; charset=UTF-8",
 				success : function(list) {
 					
-				var qurArr = [];
+				//var qurArr = [];
 				
 				/*
 				qurRate 전체값 받아오기
 				*/
-			  	for(var j=0; j<resultArray.length; j++){
+			  	/*for(var j=0; j<resultArray.length; j++){
 					for(var i=0; i<list.length;i++){
 						if(resultArray[j] == list[i].gubun){ //list안의 구분값 list안의 map 의 key값이 gubun인 value값
 						qurArr.push(list[i].qurRate); //rate 값 전부가 담긴 내용
 						}
 					}
-				}
+				}*/
 				
 				/*
 				qurRate 구분 값에 맞게 나누기
 				*/
-				console.log(qurArr);
-				const newArray = division(qurArr, resultArray.length-1);
+				/*console.log(qurArr);
+				const newArray = division(qurArr, resultArray.length);
 				console.log(newArray); //[Array[0], Array[1]]
-				
+				*/
 				/*
 				series 형태 (list 안의 map 형태) 로 값을 넣어줘야함
 				*/
-				var mapObject = new Map();
-				for(var a=0; a<resultArray.length-1;a++){
-				mapObject.set('name', '윤묵');
-				mapObject.set('data', 'qurRate값');
+/*				var mapObject = new Map();
+				const listObject = [];
+				for(var a=0; a<resultArray.length;a++){
+				mapObject.put('name', resultArray[a]);
+				mapObject.put('data', newArray[a]);
+				var strMap = JSON.stringify(mapObject);
+				console.log('MAP OBJECT->'+mapObject);
+				console.log('MAP OBJECT STRINGIFY->'+strMap);
+				var strMap1 =strMap.substr(7,strMap.length);
+				var strMap2 = strMap1.substr(0, strMap1.length-1);
+				console.log('STRINGIFY SUBSTR ->'+strMap2);
 				
-				console.log(mapObject); 
+				listObject.push(strMap2);
 				}
-					
+				console.log('LIST OBJECT ->'+listObject);
+				console.log('LIST OBJECT TYPE->'+typeof(listObject)); //Object
+				
+
+				
+				var listval =JSON.stringify(listObject).replace('','').trim();
+				var listval1 = listval.substr(2,listval.length);
+				var listval2 = listval1.substr(0,listval1.length-2);
+				
+				console.log('LIST OBJECT SUBSTR ->'+listval2);
+*/
+				var data = JSON.stringify(list);
+				var data1 = data.replaceAll('["', '[').replaceAll('"]',']');
+				
+				
+				console.log(data1);
+				var tag = new StringBuffer();
+				tag.append(data1);
+				var text = tag.toString();
+				console.log(text);
+				
 				chart.setData({
 				  categories: dateArray,
-				  series: list
-				 /* [
-				    {
+				  series: 
+				  //text
+				  [{"data":[42950, 43179, 43391, 43575, 43681],"name":"인천"},{"data":[44256, 44631, 44958, 45238, 45422],"name":"광주"},{"data":[45707, 45928, 46138, 46314, 46392],"name":"서울"}]
+				  
+				  //[{"data":[46314, 46392],"name":"서울"},{"data":[44215, 44326],"name":"경기"},{"data":[39891, 40035],"name":"전남"}]
+					
+					/*[
+					{ data :[ 46314, 46392 ], name : '서울' },
+					{ data :[ 44215, 44326 ], name : '경기'},
+					{ data :[ 39891, 40035 ], name : '전남'}
+					]*/
+	
+				    /*{
 				      name: resultArray,
-				      data: qurRate,
+				      data: qurRate, //strMap2
 				    }
-				  ]*/
+				  */
 				  
 				});
 				
