@@ -1,3 +1,6 @@
+
+
+			
 			const grid1 = new tui.Grid({
 				el : document.getElementById('grid1'),
 				scrollX : false,
@@ -200,6 +203,21 @@ function getCheckboxValue()  {
   resultArray = result.split(' ');
   console.log(resultArray);
 }
+
+const division = (배열, n개씩) => {
+  const length = 배열.length;
+  const divide = Math.floor(length / n개씩) + (Math.floor( length % n개씩 ) > 0 ? 1 : 0);
+  const newArray = [];
+
+  for (let i = 0; i <= divide; i++) {
+    // 배열 0부터 n개씩 잘라 새 배열에 넣기
+    newArray.push(배열.splice(0, n개씩)); 
+  }
+
+  return newArray;
+}
+
+// [[0, 1, 2], [3, 4, 5], [6, 7]]
 		
 		
 		function search(){
@@ -278,24 +296,47 @@ function getCheckboxValue()  {
 				contentType : "application/json; charset=UTF-8",
 				success : function(list) {
 					
-			  console.log(list);
-					console.log(Array.isArray(list)); //true
-					console.log(list);
-					const stdDay = list.map(row=>row.stdDay);
-					console.log(stdDay);
-					const gubun = list.map(row=>row.gubun);
-					console.log(gubun);
-					const qurRate = list.map(row=>row.qurRate);
-					console.log(qurRate); //array true
+				var qurArr = [];
+				
+				/*
+				qurRate 전체값 받아오기
+				*/
+			  	for(var j=0; j<resultArray.length; j++){
+					for(var i=0; i<list.length;i++){
+						if(resultArray[j] == list[i].gubun){ //list안의 구분값 list안의 map 의 key값이 gubun인 value값
+						qurArr.push(list[i].qurRate); //rate 값 전부가 담긴 내용
+						}
+					}
+				}
+				
+				/*
+				qurRate 구분 값에 맞게 나누기
+				*/
+				console.log(qurArr);
+				const newArray = division(qurArr, resultArray.length-1);
+				console.log(newArray); //[Array[0], Array[1]]
+				
+				/*
+				series 형태 (list 안의 map 형태) 로 값을 넣어줘야함
+				*/
+				var mapObject = new Map();
+				for(var a=0; a<resultArray.length-1;a++){
+				mapObject.set('name', '윤묵');
+				mapObject.set('data', 'qurRate값');
+				
+				console.log(mapObject); 
+				}
 					
 				chart.setData({
-				  categories: stdDay,
-				  series: [
+				  categories: dateArray,
+				  series: list
+				 /* [
 				    {
-				      name: gubun,
+				      name: resultArray,
 				      data: qurRate,
 				    }
-				  ]
+				  ]*/
+				  
 				});
 				
 				}//chart suc
