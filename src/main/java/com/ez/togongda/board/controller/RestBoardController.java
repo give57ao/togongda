@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.json.XML;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -250,7 +251,7 @@ public class RestBoardController {
 	}
 	
 	@PostMapping(value = "/searchCovidChart")
-	public List<Map<String, Object>>  searchCovidChart(@RequestBody Map<String, Object> params) throws IOException {
+	public  ResponseEntity<List<Map<String, Object>>>  searchCovidChart(@RequestBody Map<String, Object> params) throws IOException {
 		
 		String resultStr = (String) params.get("resultArray");
 		String resultStr1 =resultStr.substring(0, resultStr.length()-1);		
@@ -300,58 +301,35 @@ public class RestBoardController {
 
         
 
-//        for(int i=0; i<resultArray.length;i++) { // 구분갯수만큼 반복
-//        	Map<String, Object> chartMap1 = new HashMap<String, Object>(); //구분 갯수만큼 map이 생성되어 list에 담겨야 하기 때문
-//        	chartMap1.put("name", result.get(i).get("gubun").toString());
-//
-//        	
-//    		String resultStr3 =resultArray[i].substring(0, resultArray[i].length()-1).substring(1);		
-//            String resultStr4 = resultStr3.substring(1);
-//        	
-//            for(int j=0; j<dateArray.length;j++) {  //날짜의 배열 개수
-//            if(result.get(j).get("gubun").toString().equals(resultStr4)) { //만약 구분값이 동일하다면 (파라미터와 result 리스트값)
-//
-//            	qurRateList.add(result.get(j).get("qurRate").toString()); //qurRate 값들을 리스트 하나에 담는다.
-//            	chartMap1.put("data", qurRateList);
-//				/*
-//				 *날짜 배열의 개수만큼 qurRate가 담기는 코드
-//				*/
-//            	}// if end
-//        	chartList.add(chartMap1);
-//
-//            } //날짜 만큼 반복 종료	 	
-//			/*
-//			 * 리스트에 맵을 담는 코드 
-//			 */		
-//            
-//        }// 구분횟수만큼 반복 종료
-        
-
         List<Map<String, Object>> chartList =  new ArrayList<>();   //마지막에 return할 List 선언
         
         for(int i=0; i<resultArray.length;i++) {
 	        Map<String, Object> chartMap1 = new HashMap<String, Object>(); 
 			chartMap1.put("name", result.get(i).get("gubun").toString());
-	        List<String> qurRateList = new ArrayList<String>(); 
-	        List<String> qurList = new ArrayList<String>(); 
 
-
+	        int suc = 0;
+	        List<Integer> qurRateList = new ArrayList<Integer>(dateArray.length);  //날짜가 3일이면 3일만큼만 들어가게끔 배열 생성 구분갯수만큼 생성(초기화)하면 됌
         	for(int j=0; j<dateArray.length*resultArray.length;j++) {
+
         		//result는 8개인데 날짜만큼 반복하면 총 4번 반복함 그러므로 구분횟수만큼 곱해줌
         		if(result.get(j).get("gubun").equals(resultArray[i].substring(0, resultArray[i].length()-1).substring(1))) { 
+        	        suc = suc+1;
         	        
-            	    qurRateList.add(result.get(j).get("qurRate").toString());		 //qurRateList.size() = 8인 상황
-        		
-        		}
+        			String qurRateStr = result.get(j).get("qurRate").toString();
+        			int qurRateInt = Integer.parseInt(qurRateStr);
+            	    qurRateList.add(qurRateInt);		 //qurRateList 내부에는 인트값만 있음
+        			
+        			if(suc == dateArray.length) {        	
+                	chartMap1.put("data", qurRateList);
+        			}
+            	    }
         		//8번 반복해서 값이 잔뜩 들어간 녀석에게 구분갯수에 맞게 나눈 후 담아준다.
         			
         	
-        		
+
         	} //날짜 횟수 반복문 end
-        	String data = partition(qurRateList,dateArray.length).toString();
-        	String data2 = data.replace("[", "").replace("]", "");
-        	qurList.add(data2);
-        	chartMap1.put("data", qurList);
+        	;
+
 		      
         	chartList.add(chartMap1);
 
@@ -368,15 +346,9 @@ public class RestBoardController {
         
         
         
-		return chartList;
+		return ResponseEntity.ok().body(chartList);
 	}
 
-	//
-	 private static  <T> Collection<List<T>> partition(List<T> list, int size) { 
-		 final AtomicInteger counter = new AtomicInteger (0);
-		 return list.stream ().collect (Collectors.groupingBy (it -> counter.getAndIncrement () / size)).values ();
-		 }
-	
 	
 
 }
