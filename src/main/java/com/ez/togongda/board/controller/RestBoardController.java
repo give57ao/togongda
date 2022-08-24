@@ -311,7 +311,6 @@ public class RestBoardController {
 	        List<Integer> qurRateList = new ArrayList<Integer>(dateArray.length);  //날짜가 3일이면 3일만큼만 들어가게끔 배열 생성 구분갯수만큼 생성(초기화)하면 됌
         	for(int j=0; j<dateArray.length*resultArray.length;j++) {
 
-        		//result는 8개인데 날짜만큼 반복하면 총 4번 반복함 그러므로 구분횟수만큼 곱해줌
         		if(result.get(j).get("gubun").equals(resultArray[i].substring(0, resultArray[i].length()-1).substring(1))) { 
         	        suc = suc+1;
         	        
@@ -323,28 +322,14 @@ public class RestBoardController {
                 	chartMap1.put("data", qurRateList);
         			}
             	    }
-        		//8번 반복해서 값이 잔뜩 들어간 녀석에게 구분갯수에 맞게 나눈 후 담아준다.
-        			
-        	
 
         	} //날짜 횟수 반복문 end
-        	;
 
-		      
         	chartList.add(chartMap1);
 
         } // 구분 횟수 반복 end
         
         System.out.println(chartList);
-        
-        
-		/*
-			결국 맵은 구분 갯수만큼 나와야 함
-			리스트에 맵을 담는 행위는 총 구분횟수 반복문 내부에 들어가야 하고			
-			날짜만큼 qurRate가 담겨야 하기 때문에 날짜 반복문 내부에 들어가야 함
-		 */
-        
-        
         
 		return ResponseEntity.ok().body(chartList);
 	}

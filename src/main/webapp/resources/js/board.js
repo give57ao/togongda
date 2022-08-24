@@ -116,15 +116,9 @@ window.onload = function() {
 					console.log(Array.isArray(list)); //true
 					
 					const stdDay = list.map(row=>row.stdDay);
-					console.log(stdDay);
-					const gubun = list.map(row=>row.gubun);
-					console.log(gubun);
+					const gubun = list.map(row=>row.gubun);					
 					const qurRate = list.map(row=>row.qurRate);
-					console.log(qurRate); //array true
-					
-					
 
-					
 				chart.setData({
 				  categories: stdDay,
 				  series: [
