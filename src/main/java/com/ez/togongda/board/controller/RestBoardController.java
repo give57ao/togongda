@@ -86,7 +86,7 @@ public class RestBoardController {
         } 
         }
         
-
+ 
         return result; // 담은 result를 ajax에게 넘겨줌 
 	}
 	

@@ -36,7 +36,7 @@
 				}
 				
 				]
-
+ 
 			}); //grid 
 			
 			const el = document.getElementById('chart-area');
