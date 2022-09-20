@@ -2,6 +2,7 @@
 				el : document.getElementById('grid1'),
 				scrollX : false,
 				scrollY : true,
+				width : 1500,
 			
 				columns : [ {
 					header : '기준일자',
@@ -154,7 +155,7 @@ window.onload = function() {
 
 		
 		
-	function getDateRangeData(param1, param2){  //param1은 시작일, param2는 종료일이다.
+	function getDateRangeData(param1, param2){  
 	var res_day = [];
  	var ss_day = new Date(param1);
    	var ee_day = new Date(param2);    	

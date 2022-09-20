@@ -86,7 +86,7 @@ public class RestBoardController {
         } 
         }
         
- 
+
         return result; // 담은 result를 ajax에게 넘겨줌 
 	}
 	
@@ -130,7 +130,6 @@ public class RestBoardController {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Content-type", "application/json");
-        System.out.println("Response code: " + conn.getResponseCode());
         BufferedReader rd;
         if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
             rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -146,15 +145,12 @@ public class RestBoardController {
         conn.disconnect();
 
        String result =  sb.toString();
-       
-       
        return result;
 	}
 	
 	@PostMapping(value = "/searchCovidList")
 	public List<Map<String, Object>>  searchCovidList(@RequestBody Map<String, Object> params) throws IOException {
 
-		
 		String resultStr = (String) params.get("resultArray");
 		String resultStr1 =resultStr.substring(0, resultStr.length()-1);		
         String resultStr2 = resultStr1.substring(1);
@@ -172,8 +168,8 @@ public class RestBoardController {
         List<Map<String, Object>> result = null; //마지막에 return할 List 선언
         result = new ArrayList<>();  //list 초기화
 	
-        for(int i=0; i<dateArray.length;i++) {
-        	for(int j=0; j<resultArray.length;j++) {
+        for(int i=0; i<dateArray.length;i++) { //사용자가 선택한 날짜 개수 만큼 반복
+        	for(int j=0; j<resultArray.length;j++) { // 사용자가 선택한 지역명 개수 만큼 반복
         		
 		String xml = getCovidData((dateArray[i].substring(0, dateArray[i].length()-1)).substring(1),(resultArray[j].substring(0, resultArray[j].length()-1)).substring(1));
 		Object json = XML.toJSONObject(xml); //xml -> json
